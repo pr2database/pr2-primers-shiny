@@ -33,8 +33,8 @@ Vaulot, D., Mahé, F., Bass, D., & Geisen, S. (2021). [pr2-primer : An 18S rRN
 ### Resources
 * Website: https://app.pr2-primers.org/
 * Docker: https://hub.docker.com/repository/docker/vaulot/pr2-primers
-* Source code: https://github.com/pr2database/pr2-primers
-* Script: https://pr2database.github.io/pr2-primers/PR2_Primers.html
+* Source code: https://github.com/pr2database/pr2-primers-shiny
+* Scripts: https://pr2database.github.io/pr2-primers/PR2_Primers.html
 
 ### Maintainer
 * Daniel Vaulot: vaulot@gmail.com
