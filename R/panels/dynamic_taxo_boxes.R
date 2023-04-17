@@ -1,7 +1,7 @@
 # --- Supergroups
 supergroups <- reactive({
-  req(input$kingdom)
-  filter(pr2_taxo, kingdom == input$kingdom) %>% 
+  req(input$domain)
+  filter(pr2_taxo, domain == input$domain) %>% 
     pull(supergroup) %>%  
     unique()  
 })
@@ -20,6 +20,18 @@ divisions <- reactive({
 
 observeEvent(divisions(), {
   updateSelectInput(session, "division", choices = c("All", divisions()))
+})
+
+# --- Subdivisions
+subdivisions <- reactive({
+  req(input$division)
+  filter(pr2_taxo, division == input$division) %>% 
+    pull(subdivision) %>%  
+    unique()  
+})
+
+observeEvent(subdivisions(), {
+  updateSelectInput(session, "subdivision", choices = c("All", subdivisions()))
 })
 
 # --- Classes    

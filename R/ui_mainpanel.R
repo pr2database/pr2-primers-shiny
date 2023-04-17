@@ -2,8 +2,6 @@ main_panel <- mainPanel(
   tabsetPanel(
     id = 'panel' ,
     
-    tabPanel("About", column(8, includeMarkdown("README.md"))),
-    
     
     tabPanel("Primers", dataTableOutput("table_primers")),
     
@@ -21,7 +19,9 @@ main_panel <- mainPanel(
     
     tabPanel("Test your primer set" , 
              withSpinner(uiOutput('primer_set_matches_user')),
-             uiOutput('primer_set_matches_user_graph'))
+             uiOutput('primer_set_matches_user_graph')),
+    
+    tabPanel("About", column(8, includeMarkdown("README.md")))
 
     # tabPanel("Amplification - one set", dataTableOutput("test"))
   )

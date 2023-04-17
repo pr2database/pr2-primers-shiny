@@ -1,5 +1,8 @@
 ## The PR2 primer database
 ---
+
+version 2.0.0
+
 [![DOI](https://zenodo.org/badge/191439796.svg)](https://zenodo.org/badge/latestdoi/191439796)
 
 
@@ -9,17 +12,27 @@ An [interactive database](https://app.pr2-primers.org/) of eukaryotic rRNA prime
 
 * **Primers**. Primers have been mapped when possible onto the reference SSU sequence for _[Saccharomyces cerevisiae](http://apollo.chemistry.gatech.edu/RibosomeGallery/eukarya/S%20cerevisiae/SSU/index.html)_ ([FU970071](https://www.ncbi.nlm.nih.gov/nuccore/FU970071), 1799 nucleotides, first nucleotide mrearked as 1).  
 
-* **Primer sets**. Primer sets for 18S rRNA have been tested against the [eukaryotic PR2 database](https://pr2-database.org/) version 4.12.0 as well as [Silva Seed release 132](https://mothur.s3.us-east-2.amazonaws.com/wiki/silva.seed_v132.tgz) and results can be displayed interactively.
+* **Primer sets**. Primer sets for 18S rRNA have been tested against the [eukaryotic PR2 database](https://pr2-database.org/) version 5.0.0 that contains sequences from Eukaryota, Bacteria, Archaea and Eukaryota plastids. Results can be displayed interactively.
+
+### Taxonomy
+
+pr2-primers use a nine-level taxonomy from version [5.0.0 of the PR2 database](https://github.com/pr2database/pr2database/releases/tag/v5.0.0)
+
+One of four "domains" can be selected:
+* Archaea           
+* Bacteria         
+* Eukaryota      
+* Eukaryota:plas - This corresponds to Eukaryota plastid sequences
 
 ### Panels
 
-* **About**: Basic information 
-* **Primers**: table with download
-* **Primer sets**: table with download
+* **Primers**: table of primers that can be downloaded 
+* **Primer sets**: table of primer sets that can be downloaded
 * **Amplification - overview**: Give for all primer sets tested % of sequences amplified and amplicon size
 * **Amplification - detail**: For one primer set tested, detail for different taxonomic levels (kingdom, supergroup, division, class)
 * **Test your primer/probe**: Test a single primer or probe against PR2 version 4.12.0 and Silva seed 132
 * **Test your primer set**: Test your primer set against PR2 version 4.12.0 and Silva seed 132
+* **About**: Basic information on pr2-primers
 
 ### Errors
 
@@ -39,13 +52,24 @@ Vaulot, D., Mahé, F., Bass, D., & Geisen, S. (2021). [pr2-primer : An 18S rRN
 ### Maintainer
 * Daniel Vaulot: vaulot@gmail.com
 
-### Contributors
+### Contributors to version 1
 
 * Stefan Geisen:  stefan.geisen@wur.nl
 * Fréderic Mahé: frederic.mahe@cirad.fr
 * David Bass: david.bass@cefas.co.uk
 
+---
+
 ### Versions
+
+2.0.0 - 2023-04-15
+* Use PR2 database version 5.0.0 with 9 levels instead of 8
+* Add 24 primers and 9 primer sets
+* Faster file loading using the qs R library
+* Allow matches to prokaryotes and plastid sequences
+
+1.1.1 - 2022-04-21
+* Run on Google server and not on Docker anymore
 
 1.1.0 - 2021-05-17
 * Panel to test individual primer or probes.

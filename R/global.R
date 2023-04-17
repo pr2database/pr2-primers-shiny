@@ -56,23 +56,25 @@ idleTimer();"
 
 # Constants ---------------------------------------------------------------
 
-max_mismatch = 2
-gene_selected = "18S_rRNA"  # Can be 18S_rRNA or 16_rRNA
+global <- list()
+global$max_mismatch = 2
+global$gene_selected_label = "SSU_rRNA"  # Includes both 18S and 16S
 
-sequence_length_min = 1350
-sequence_length_min_V9 = 1650 
-sequence_length_min_V4 = 1200 
+global$sequence_length_min = 1100
+global$sequence_length_min_V9 = 1650
+global$sequence_length_min_V4 = 1100 
 
-taxo_levels <- c("kingdom", "supergroup", "division", "class", "genus")
+global$taxo_levels <- c("domain", "supergroup", "division", "subdivision", "class", "genus")
+global$domains_used = c("Eukaryota", "Eukaryota:plas", "Archaea", "Bacteria" )
 
 # Read the data -----------------------------------------------------------
 
 # --- Primers
 
-  primers<- import("data/primers.rds") %>% 
+  primers<- qs::qread("data/primers.qs") %>% 
     filter(str_detect(gene, "rRNA")) 
     
-  primer_sets<- import("data/primer_sets.rds") %>% 
+  primer_sets<- qs::qread("data/primer_sets.qs") %>% 
     filter(str_detect(gene, "rRNA"))  %>% 
     mutate(primer_set_label_long = str_c(sprintf("%03d",  primer_set_id), "-", 
                                          gene_region, 
@@ -84,7 +86,7 @@ taxo_levels <- c("kingdom", "supergroup", "division", "class", "genus")
 
 # --- At euk level
 
-  pr2_match_summary <- import("data/pr2_match_18S_rRNA_mismatches_2_summary.rds") %>% 
+  pr2_match_summary <- qs::qread("data/pr2_match_SSU_rRNA_mismatches_2_summary.qs") %>% 
     select(-primer_set_label_long) %>% 
     left_join(select(primer_sets, primer_set_id, primer_set_label_long)) 
   
@@ -116,19 +118,16 @@ taxo_levels <- c("kingdom", "supergroup", "division", "class", "genus")
     filter(primer_set_id %in% pr2_match_summary$primer_set_id)
 
 # --- Read pr2
-  pr2 <- import("data/pr2_4.12.0.rds")
-  silva <- import("data/silva_seed_132.rds")
-  
-  pr2 <- bind_rows(pr2, silva)
+  pr2 <- qs::qread("data/pr2_5.0.0.qs")
 
 # --- Taxonomic levels
 
   # load("data/pr2_match_18S_rRNA_set_008_mismatches_2.rda")
 
   pr2_taxo <- pr2 %>% 
-      select(kingdom, supergroup, division, class, order, family, genus) %>% 
-      arrange(kingdom, supergroup, division, class, order, family, genus) %>% 
+      select(domain, supergroup, division, subdivision, class, order, family, genus) %>% 
+      arrange(domain, supergroup, division, subdivision, class, order, family, genus) %>% 
       distinct()
 
   print(pryr::mem_used())
-  print("read_data.R done")
+  print("global.R done")

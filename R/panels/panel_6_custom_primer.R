@@ -11,12 +11,12 @@ primer_match.df <- eventReactive(input$button_compute_primer, ({
 )
 
 primer_match_stats <- eventReactive(input$button_compute_primer,({ primer_match.df() %>%
-    group_by(kingdom) %>%
-    summarise(pct_fwd = sum(!is.na(fwd_pos))/n()*100) %>%
-    tidyr::pivot_longer(cols = pct_fwd, names_to = "Parameter", values_to = "Values") %>%
-    mutate(Parameter = str_replace_all(Parameter,c("_" = " ",
-                                                   "pct" = "% sequences",
-                                                   "fwd" = "matching primer/probe")))
+    group_by(domain) %>%
+    summarise(pct_fwd = sum(!is.na(fwd_pos))/n()*100) # %>%
+    # tidyr::pivot_longer(cols = pct_fwd, names_to = "Parameter", values_to = "Values") %>%
+    # mutate(Parameter = str_replace_all(Parameter,c("_" = " ",
+    #                                                "pct" = "% sequences",
+    #                                                "fwd" = "matching primer/probe")))
 })
 )
 
@@ -26,7 +26,7 @@ output$primer_matches_user <- renderUI({
   tagList(
     p("Overall statistics"),
     p(),
-    renderTable(primer_match_stats(), width = 600, colnames = FALSE),
+    renderTable(primer_match_stats(), width = 800, colnames = TRUE),
     downloadHandler(
       filename = function() {str_c("primer_match_pr2_", Sys.Date(), ".tsv")},
       content = function(path) {export(primer_match.df(), file=path)},
@@ -40,7 +40,7 @@ plot_primer_matches_simple_taxa_data <- eventReactive(
     input$button_compute_primer },
   {
     # --- Determine at which level do the plot depending on what has been selected
-    taxo <- taxo_selected(input$kingdom, input$supergroup, input$division, input$class)
+    taxo <- taxo_selected(input$domain, input$supergroup, input$division, input$subdivision, input$class)
     plot_primer_matches_simple_taxa(primer_match.df(), taxo$level, taxo$name)
   })
 

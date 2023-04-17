@@ -2,16 +2,16 @@
 # Function to plot matches for all primers --------------------------------
 
 
-plot_matches <- function( kingdom_one = "Eukaryota", type = "general") {  
+plot_matches <- function( domain_one = "Eukaryota", type = "general") {  
 
   # --- Plot number of sequence amplified with fwd, rev and both
   
   df <- pr2_match_summary_long_1 %>% 
       filter(pct_category %in% c("ampli_pct", "fwd_pct", "rev_pct")) %>% 
       filter(specific == type) %>% 
-      filter(kingdom == kingdom_one)
+      filter(domain == domain_one)
   
-  # print(kingdom_one)
+  # print(domain_one)
 
   g1 <- ggplot(df) + 
     geom_col(aes(x=primer_set_label_long, y=pct_seq, 
@@ -34,7 +34,7 @@ plot_matches <- function( kingdom_one = "Eukaryota", type = "general") {
 
   df <- pr2_match_summary_long_2 %>%  
       filter(specific == type) %>% 
-      filter(kingdom == kingdom_one) 
+      filter(domain == domain_one) 
   
   g2 <- ggplot(df,
             aes(x = primer_set_label_long,
@@ -62,7 +62,7 @@ plot_matches <- function( kingdom_one = "Eukaryota", type = "general") {
   df <- pr2_match_summary %>% 
       filter(!is.nan(ampli_size_mean)) %>%  
       filter(specific == type) %>% 
-      filter(kingdom == kingdom_one)
+      filter(domain == domain_one)
   
   g3 <- ggplot(df) + 
     geom_point(aes(x=primer_set_label_long, y=ampli_size_mean), colour="black") +
@@ -104,43 +104,45 @@ plot_matches <- function( kingdom_one = "Eukaryota", type = "general") {
     
   # --- Read file with all matches
   
-    rda_file_label = str_c(sprintf("_set_%03d", as.integer(one_primer_set)), "_mismatches_", max_mismatch)
+    rda_file_label = str_c(sprintf("_set_%03d", as.integer(one_primer_set)), "_mismatches_", global$max_mismatch)
+    file_name = str_c("data/pr2_match_", global$gene_selected_label ,rda_file_label, ".qs")
     
     # The rda file is loaded into pr2_match
     
-    tryCatch(load(file=str_c("data/pr2_match_", gene_selected ,rda_file_label, ".rda")), 
-             error=function(e) warning(stringr::str_c("Cannot read file: ", GB_file),
+    tryCatch(pr2_match <- qs::qread(file_name), 
+             error=function(e) warning(stringr::str_c("Cannot read file: ", file_name),
 		         call. = FALSE, immediate. = TRUE, noBreaks. = TRUE)) 
 
     df <- pr2_match %>% 
+        filter(domain %in% global$domains_used) %>% 
         filter(! str_detect(pr2_accession, "_UC")) %>%  # Remove sequences for which the introns have been removed
-        filter((str_detect(gene_region, "V4") & sequence_length>= sequence_length_min_V4) | # Remove sequence that are shorter
-               (str_detect(gene_region, "V9") & sequence_length>= sequence_length_min_V9 & kingdom == "Eukaryota") |
-               (str_detect(gene_region, "V9") & sequence_length>= sequence_length_min & kingdom != "Eukaryota") |
-               (! str_detect(gene_region, "V4|V9") & sequence_length>= sequence_length_min))
+        filter((str_detect(gene_region, "V4") & sequence_length>= global$sequence_length_min_V4) | # Remove sequence that are shorter
+               (str_detect(gene_region, "V9") & sequence_length>= global$sequence_length_min_V9 & domain == "Eukaryota") |
+               (str_detect(gene_region, "V9") & sequence_length>= global$sequence_length_min & domain != "Eukaryota") |
+               (! str_detect(gene_region, "V4|V9") & sequence_length>= global$sequence_length_min))
         # filter(sequence_length >= sequence_length_min)  # Remove sequences that are too short
         
     rm(pr2_match) # To save memory 
     
-  #  --- Compute summary at kingdom level
+  #  --- Compute summary at domain level
     
-    summary_kingdom <- df  %>%      
-      group_by(kingdom) %>% 
+    summary_domain <- df  %>%      
+      group_by(domain) %>% 
       summarise(pct_fwd = sum(!is.na(fwd_pos))/n()*100,
                 pct_rev = sum(!is.na(rev_pos))/n()*100,
                 pct_amplified = sum(!is.na(ampli_size))/n()*100,
-                mean_amplicon_size = mean(ampli_size, na.rm = TRUE)) %>%
-      tidyr::pivot_longer(cols = pct_fwd:mean_amplicon_size, names_to = "Parameter", values_to = "Values") %>%
-      mutate(Parameter = str_replace_all(Parameter,c("_" = " ",
-                                                     "pct" = "% sequences",
-                                                     "fwd" = "matching forward primer",
-                                                     "rev" = "matching reverse primer")))
+                mean_amplicon_size = mean(ampli_size, na.rm = TRUE))  # %>%
+      # tidyr::pivot_longer(cols = pct_fwd:mean_amplicon_size, names_to = "Parameter", values_to = "Values") %>%
+      # mutate(Parameter = str_replace_all(Parameter,c("_" = " ",
+      #                                                "pct" = "% sequences",
+      #                                                "fwd" = "matching forward primer",
+      #                                                "rev" = "matching reverse primer")))
       
     
   #  --- Filter by taxo level
     
     taxo_level=as.symbol(taxo_level_quoted)
-    taxo_level_below_quoted = taxo_levels[which(taxo_levels == taxo_level_quoted) + 1]
+    taxo_level_below_quoted = global$taxo_levels[which(global$taxo_levels == taxo_level_quoted) + 1]
     taxo_level_below=as.symbol(taxo_level_below_quoted)
     
     df <- df %>% 
@@ -233,7 +235,7 @@ plot_matches <- function( kingdom_one = "Eukaryota", type = "general") {
     
     gg <- (g3+g4) /(g1+g2) + plot_layout(heights = c(1, 0.3 + n_taxa/15))
     
-    return(list(summary_kingdom = summary_kingdom, gg = gg, n_taxa = n_taxa))
+    return(list(summary_domain = summary_domain, gg = gg, n_taxa = n_taxa))
   }
   
   
@@ -243,7 +245,7 @@ plot_matches <- function( kingdom_one = "Eukaryota", type = "general") {
     
 
     taxo_level=as.symbol(taxo_level_quoted)
-    taxo_level_below_quoted = taxo_levels[which(taxo_levels == taxo_level_quoted) + 1]
+    taxo_level_below_quoted = global$taxo_levels[which(global$taxo_levels == taxo_level_quoted) + 1]
     taxo_level_below=as.symbol(taxo_level_below_quoted)
     
     df <- df %>% 
@@ -312,7 +314,7 @@ plot_matches <- function( kingdom_one = "Eukaryota", type = "general") {
     
     
     taxo_level=as.symbol(taxo_level_quoted)
-    taxo_level_below_quoted = taxo_levels[which(taxo_levels == taxo_level_quoted) + 1]
+    taxo_level_below_quoted = global$taxo_levels[which(global$taxo_levels == taxo_level_quoted) + 1]
     taxo_level_below=as.symbol(taxo_level_below_quoted)
     
     df <- df %>% 

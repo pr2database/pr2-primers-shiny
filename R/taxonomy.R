@@ -1,4 +1,4 @@
-taxo_selected <- function(kingdom, supergroup, division, class){
+taxo_selected <- function(domain, supergroup, division, subdivision, class){
   
 # Small function to return the taxo level and taxon name 
 # If the lowest level is "All" then it is the one selected then goes up one level
@@ -7,16 +7,21 @@ taxo_selected <- function(kingdom, supergroup, division, class){
         taxo_level = "class"
         taxo_name = class
       } else {
-        if(division != "All") {
-        taxo_level = "division"
-        taxo_name = division
-        } else {
-          if(supergroup != "All") {
-          taxo_level = "supergroup"
-          taxo_name = supergroup
+        if(subdivision != "All") {
+        taxo_level = "subdivision"
+        taxo_name = subdivision
+        }else {
+          if(division != "All") {
+            taxo_level = "division"
+            taxo_name = division
           } else {
-            taxo_level = "kingdom"
-            taxo_name = kingdom          
+            if(supergroup != "All") {
+            taxo_level = "supergroup"
+            taxo_name = supergroup
+            } else {
+              taxo_level = "domain"
+              taxo_name = domain          
+            }
           }
         }  
       }  

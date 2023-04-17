@@ -5,13 +5,13 @@ side_bar <- sidebarPanel(width = 3,
              
              conditionalPanel(
                'input.panel == "About"',
-               includeMarkdown("about.md")
+               includeMarkdown("inst/readme/about.md")
              ),
              
              # --- Panel primers
              conditionalPanel(
                'input.panel == "Primers"',
-               includeMarkdown("primers.md"),
+               includeMarkdown("inst/readme/primers.md"),
                p(),
                downloadButton("table_primers_download", "Download primers"),
                p(),
@@ -24,7 +24,7 @@ side_bar <- sidebarPanel(width = 3,
              # --- Panel primer sets
              conditionalPanel(
                'input.panel == "Primer sets"',
-               includeMarkdown("primer_sets.md"),
+               includeMarkdown("inst/readme/primer_sets.md"),
                p(),
                downloadButton("table_primer_sets_download", "Download primer sets"),
                p(),
@@ -42,8 +42,8 @@ side_bar <- sidebarPanel(width = 3,
                radioButtons("type", "Primer type:",
                             c("General" = "general",
                               "Specific" = "specific")),
-               selectInput("kingdom_3", "Kingdom",
-                           choices = c("Eukaryota", "Bacteria", "Archaea")),
+               selectInput("domain_3", "Domain",
+                           choices = c("Eukaryota", "Eukaryota:plas", "Bacteria", "Archaea")),
              ),
              
              # --- Amplification for one primer set and one taxonomic level
@@ -99,11 +99,13 @@ side_bar <- sidebarPanel(width = 3,
                 input.panel == "Test your primer set" ||
                 input.panel == "Test your primer/probe"',
                hr(),
-               selectInput("kingdom", "Kingdom",
-                           choices = c("Eukaryota", "Bacteria", "Archaea")),
+               selectInput("domain", "Domain",
+                           choices = c("Eukaryota", "Eukaryota:plas", "Bacteria", "Archaea")),
                selectInput("supergroup", "Supergroup",
                            choices = NULL),
                selectInput("division", "Division",
+                           choices = NULL),
+               selectInput("subdivision", "Subdivision",
                            choices = NULL),
                selectInput("class", "Class",
                            choices = NULL)

@@ -136,7 +136,7 @@ primer_set_match <- function(fwd_seq="GCCAGCAVCYGCGGTAAY", rev_seq ="CCGTCAATTHC
    
   # Merge the fwd and reverse position, compute the length of the amplicon and check it is bigger than sum of the lengths of the two primers
    pr2_match <- pr2 %>% 
-      select(pr2_accession, kingdom:genus, species) %>%  
+      select(pr2_accession, domain:genus, species) %>%  
       left_join(fwd_matches_unique) %>% 
       left_join(rev_matches_unique) %>%  
       mutate(ampli_size = case_when( !is.na(fwd_pos) & 
@@ -190,7 +190,7 @@ primer_match <- function(fwd_seq="GCCAGCAVCYGCGGTAAY",
 
   # Merge the fwd and reverse position, compute the length of the amplicon and check it is bigger than sum of the lengths of the two primers
   pr2_match <- pr2 %>% 
-    select(pr2_accession, kingdom:genus, species) %>%  
+    select(pr2_accession, domain:genus, species) %>%  
     left_join(fwd_matches_unique)
   
   return(pr2_match)

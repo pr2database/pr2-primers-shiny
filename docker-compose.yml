@@ -1,5 +1,0 @@
-services:
-  pr2-primers:
-    build: .
-    ports:
-      - "8080:8080"
