@@ -3,7 +3,7 @@
 
 version 2.0.0
 
-![DOI](https://zenodo.org/badge/437795232.svg)](https://zenodo.org/badge/latestdoi/437795232)
+![DOI](https://zenodo.org/badge/437795232.svg)
 
 
 An [interactive database](https://app.pr2-primers.org/) of eukaryotic rRNA primers and primer sets for metabarcoding studies compiled from the literature. 
