@@ -10,7 +10,7 @@ An [interactive database](https://app.pr2-primers.org/) of eukaryotic rRNA prime
 
 ### Database structure
 
-* **Primers**. Primers have been mapped when possible onto the reference SSU sequence for _[Saccharomyces cerevisiae](http://apollo.chemistry.gatech.edu/RibosomeGallery/eukarya/S%20cerevisiae/SSU/index.html)_ ([FU970071](https://www.ncbi.nlm.nih.gov/nuccore/FU970071), 1799 nucleotides, first nucleotide mrearked as 1).  
+* **Primers**. Primers have been mapped when possible onto the reference SSU sequence for _[Saccharomyces cerevisiae](http://apollo.chemistry.gatech.edu/RibosomeGallery/eukarya/S%20cerevisiae/SSU/index.html)_ ([FU970071](https://www.ncbi.nlm.nih.gov/nuccore/FU970071), 1799 nucleotides, first nucleotide marked as 1).  
 
 * **Primer sets**. Primer sets for 18S rRNA have been tested against the [eukaryotic PR2 database](https://pr2-database.org/) version 5.0.0 that contains sequences from Eukaryota, Bacteria, Archaea and Eukaryota plastids. Results can be displayed interactively.
 
