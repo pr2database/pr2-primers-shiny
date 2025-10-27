@@ -72,7 +72,8 @@ global$domains_used = c("Eukaryota", "Eukaryota:plas", "Archaea", "Bacteria" )
 # --- Primers
 
   primers<- qs::qread("data/primers.qs") %>% 
-    filter(str_detect(gene, "rRNA")) 
+    filter(str_detect(gene, "rRNA")) |>
+    arrange(primer_id)
     
   primer_sets<- qs::qread("data/primer_sets.qs") %>% 
     filter(str_detect(gene, "rRNA"))  %>% 
@@ -118,7 +119,7 @@ global$domains_used = c("Eukaryota", "Eukaryota:plas", "Archaea", "Bacteria" )
     filter(primer_set_id %in% pr2_match_summary$primer_set_id)
 
 # --- Read pr2
-  pr2 <- qs::qread("data/pr2_5.0.0.qs")
+  pr2 <- qs::qread("data/pr2.qs")
 
 # --- Taxonomic levels
 

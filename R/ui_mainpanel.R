@@ -3,9 +3,9 @@ main_panel <- mainPanel(
     id = 'panel' ,
     
     
-    tabPanel("Primers", dataTableOutput("table_primers")),
+    tabPanel("Primers", DT::DTOutput("table_primers")),
     
-    tabPanel("Primer sets", dataTableOutput("table_primer_sets")),
+    tabPanel("Primer sets", DT::DTOutput("table_primer_sets")),
     
     tabPanel("Amplification - overview",
              withSpinner(uiOutput("plot_matches_all"))),
@@ -23,6 +23,6 @@ main_panel <- mainPanel(
     
     tabPanel("About", column(8, includeMarkdown("README.md")))
 
-    # tabPanel("Amplification - one set", dataTableOutput("test"))
+    # tabPanel("Amplification - one set", DT::DTOutput("test"))
   )
 )

@@ -294,7 +294,7 @@ plot_matches <- function( domain_one = "Eukaryota", type = "general") {
     theme_bw() +
     xlab("") + ylab("% of sequences amplified") + 
     scale_fill_manual(name = "",  values = c("ampli_pct" = "black", "fwd_pct" = "grey80","rev_pct" = "grey40"), 
-                      labels=c( "Amplicons", "Primer rev", "Primer fwd")) +
+                      labels=c( "Amplicons", "Primer fwd", "Primer rev")) +
     theme(axis.text.y = element_text(angle = 0, hjust = 0, vjust = 0)) +
     ylim(0,100) +
     coord_flip() + 

@@ -1,7 +1,7 @@
 ## The PR2 primer database
 ---
 
-version 2.0.0
+version 2.1.0
 
 ![DOI](https://zenodo.org/badge/437795232.svg)](https://zenodo.org/badge/latestdoi/437795232)
 
@@ -12,11 +12,11 @@ An [interactive database](https://app.pr2-primers.org/) of eukaryotic rRNA prime
 
 * **Primers**. Primers have been mapped when possible onto the reference SSU sequence for _[Saccharomyces cerevisiae](http://apollo.chemistry.gatech.edu/RibosomeGallery/eukarya/S%20cerevisiae/SSU/index.html)_ ([FU970071](https://www.ncbi.nlm.nih.gov/nuccore/FU970071), 1799 nucleotides, first nucleotide mrearked as 1).  
 
-* **Primer sets**. Primer sets for 18S rRNA have been tested against the [eukaryotic PR2 database](https://pr2-database.org/) version 5.0.0 that contains sequences from Eukaryota, Bacteria, Archaea and Eukaryota plastids. Results can be displayed interactively.
+* **Primer sets**. Primer sets for 18S rRNA have been tested against the [eukaryotic PR2 database](https://pr2-database.org/) version 5.1.1 that contains sequences from Eukaryota, Bacteria, Archaea and Eukaryota plastids. Results can be displayed interactively.
 
 ### Taxonomy
 
-pr2-primers use a nine-level taxonomy from version [5.0.0 of the PR2 database](https://github.com/pr2database/pr2database/releases/tag/v5.0.0)
+pr2-primers use a nine-level taxonomy from version [5.1.1 of the PR2 database](https://github.com/pr2database/pr2database/releases/tag/v5.1.1)
 
 One of four "domains" can be selected:
 * Archaea           
@@ -61,6 +61,8 @@ Vaulot, D., Mahé, F., Bass, D., & Geisen, S. (2021). [pr2-primer : An 18S rRN
 ---
 
 ### Versions
+2.1.0 - 2025-10-10
+* Use PR2 database version 5.1.1 with 9 levels
 
 2.0.0 - 2023-04-15
 * Use PR2 database version 5.0.0 with 9 levels instead of 8

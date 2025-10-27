@@ -8,7 +8,7 @@ ui <- fluidPage(
   
   # Title
   title = "Primer database",
-  titlePanel(div(img(src='pr2_logo.png', width="80"),"The PR2 primer database - v. 2.0.0")),
+  titlePanel(div(img(src='pr2_logo.png', width="80"),"The PR2 primer database - v. 2.1.0")),
   
   
   # --- Side bar
@@ -55,7 +55,8 @@ server <- function(input, output, session) {
     
    
   # Test
-  output$test <- renderDataTable(plot_matches_sg(input$primer_set_id))    
+  output$test <- DT::renderDataTable(plot_matches_sg(input$primer_set_id), 
+                                     rownames = FALSE)    
 }
 
 # Run the shiny app -------------------------------------------------------
