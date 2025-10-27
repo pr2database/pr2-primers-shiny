@@ -61,7 +61,7 @@ Vaulot, D., Mahé, F., Bass, D., & Geisen, S. (2021). [pr2-primer : An 18S rRN
 ---
 
 ### Versions
-2.1.0 - 2025-10-10
+2.1.0 - 2025-10-27
 * Use PR2 database version 5.1.1 with 9 levels
 
 2.0.0 - 2023-04-15
