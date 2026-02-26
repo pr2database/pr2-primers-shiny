@@ -1,7 +1,7 @@
 ## The PR2 primer database
 ---
 
-version 2.1.0
+version 2.1.1
 
 ![DOI](https://zenodo.org/badge/437795232.svg)](https://zenodo.org/badge/latestdoi/437795232)
 
@@ -61,6 +61,10 @@ Vaulot, D., Mahé, F., Bass, D., & Geisen, S. (2021). [pr2-primer : An 18S rRN
 ---
 
 ### Versions
+
+2.1.1 - 2026-02-24
+* Switch from R library qs to qs2 to store the data
+
 2.1.0 - 2025-10-27
 * Use PR2 database version 5.1.1 with 9 levels
 

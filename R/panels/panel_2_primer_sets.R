@@ -6,5 +6,5 @@ output$table_primer_sets <- DT::renderDataTable({
 
 output$table_primer_sets_download <- downloadHandler(
   filename = function() {str_c("primer_sets_", Sys.Date(), ".tsv")},
-  content = function(path) {export(select(primer_sets, -doi_html, -metabarcoding_doi_html), file=path)}
+  content = function(path) {rio::export(select(primer_sets, -doi_html, -metabarcoding_doi_html), file=path)}
 ) 

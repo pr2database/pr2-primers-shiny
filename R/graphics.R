@@ -105,11 +105,11 @@ plot_matches <- function( domain_one = "Eukaryota", type = "general") {
   # --- Read file with all matches
   
     rda_file_label = str_c(sprintf("_set_%03d", as.integer(one_primer_set)), "_mismatches_", global$max_mismatch)
-    file_name = str_c("data/pr2_match_", global$gene_selected_label ,rda_file_label, ".qs")
+    file_name = str_c("data/pr2_match_", global$gene_selected_label ,rda_file_label, ".qs2")
     
     # The rda file is loaded into pr2_match
     
-    tryCatch(pr2_match <- qs::qread(file_name), 
+    tryCatch(pr2_match <- qs2::qs_read(file_name), 
              error=function(e) warning(stringr::str_c("Cannot read file: ", file_name),
 		         call. = FALSE, immediate. = TRUE, noBreaks. = TRUE)) 
 

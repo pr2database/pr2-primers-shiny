@@ -1,0 +1,9 @@
+.Rprofile
+
+archives
+data-raw
+data-archives
+sandbox
+
+readme-*
+*.Rproj

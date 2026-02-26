@@ -18,16 +18,19 @@ library(shinycssloaders) # For the spinning wheel
 library(markdown) # To display text boxes in md
 
 library(dplyr)
+library(tidyr)
 library(stringr)
 library(forcats)
-library(rio) # For export/import
+library(rio) # For export
+library(qs2) # For saving main files
 
 library(ggplot2)
 library(patchwork)
 
+library(pryr)
 
 library(Biostrings)
-# library(DT)
+library(DT)
 
 
 # Javascript function for timer -----------------------------------------------------
@@ -69,26 +72,34 @@ global$domains_used = c("Eukaryota", "Eukaryota:plas", "Archaea", "Bacteria" )
 
 # Read the data -----------------------------------------------------------
 
-# --- Primers
+  # --- Primers
 
-  primers<- qs::qread("data/primers.qs") %>% 
+  primers <- qs2::qs_read("data/primers.qs2") %>%
     filter(str_detect(gene, "rRNA")) |>
     arrange(primer_id)
     
-  primer_sets<- qs::qread("data/primer_sets.qs") %>% 
-    filter(str_detect(gene, "rRNA"))  %>% 
-    mutate(primer_set_label_long = str_c(sprintf("%03d",  primer_set_id), "-", 
-                                         gene_region, 
-                                         primer_set_name, "-", 
-                                         str_replace_na(specificity, "general"), 
-                                         sep = " "))  %>% 
+  primer_sets <- qs2::qs_read("data/primer_sets.qs2") %>%
+    filter(str_detect(gene, "rRNA")) %>%
+    mutate(
+      primer_set_label_long = str_c(
+        sprintf("%03d", primer_set_id),
+        "-",
+        gene_region,
+        primer_set_name,
+        "-",
+        str_replace_na(specificity, "general"),
+        sep = " "
+      )
+    ) %>%
     arrange(primer_set_id)
 
 
 # --- At euk level
 
-  pr2_match_summary <- qs::qread("data/pr2_match_SSU_rRNA_mismatches_2_summary.qs") %>% 
-    select(-primer_set_label_long) %>% 
+  pr2_match_summary <- qs2::qs_read(
+    "data/pr2_match_SSU_rRNA_mismatches_2_summary.qs2"
+  ) %>%
+    select(-primer_set_label_long) %>%
     left_join(select(primer_sets, primer_set_id, primer_set_label_long)) 
   
   pct_category_order <- data.frame(pct_category = c("ampli_pct","fwd_pct","rev_pct"), 
@@ -119,7 +130,7 @@ global$domains_used = c("Eukaryota", "Eukaryota:plas", "Archaea", "Bacteria" )
     filter(primer_set_id %in% pr2_match_summary$primer_set_id)
 
 # --- Read pr2
-  pr2 <- qs::qread("data/pr2.qs")
+  pr2 <- qs2::qs_read("data/pr2.qs2")
 
 # --- Taxonomic levels
 

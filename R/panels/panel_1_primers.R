@@ -6,5 +6,5 @@ output$table_primers <- DT::renderDataTable({
 
 output$table_primers_download <- downloadHandler(
   filename = function() {str_c("primers_", Sys.Date(), ".tsv")},
-  content = function(path) {export(select(primers, -doi_html), file=path)}
+  content = function(path) {rio::export(select(primers, -doi_html), file=path)}
 )      

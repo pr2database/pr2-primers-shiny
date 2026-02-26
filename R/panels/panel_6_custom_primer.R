@@ -29,7 +29,7 @@ output$primer_matches_user <- renderUI({
     renderTable(primer_match_stats(), width = 800, colnames = TRUE),
     downloadHandler(
       filename = function() {str_c("primer_match_pr2_", Sys.Date(), ".tsv")},
-      content = function(path) {export(primer_match.df(), file=path)},
+      content = function(path) {rio::export(primer_match.df(), file=path)},
       outputArgs = list(label = "Download results"),
     )
   )

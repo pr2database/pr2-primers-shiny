@@ -8,7 +8,7 @@ ui <- fluidPage(
   
   # Title
   title = "Primer database",
-  titlePanel(div(img(src='pr2_logo.png', width="80"),"The PR2 primer database - v. 2.1.0")),
+  titlePanel(div(img(src='pr2_logo.png', width="80"),"The PR2 primer database - v. 2.1.1")),
   
   
   # --- Side bar
